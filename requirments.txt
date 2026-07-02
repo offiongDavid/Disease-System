@@ -1,0 +1,322 @@
+# Smart Clinic Disease Prediction System
+
+## Project Overview
+
+The Smart Clinic Disease Prediction System is a web-based application developed for managing student consultations in schools and learning environments. The system allows clinic staff to:
+
+* Register students
+* Record consultations
+* Select symptoms
+* Predict possible diseases
+* Store medical consultation records
+* View student history and analytics
+* Use AI-assisted prediction support
+
+The project was built using:
+
+* React.js (Frontend)
+* Node.js + Express.js (Backend)
+* MongoDB (Database)
+* Tailwind CSS (UI Styling)
+* Groq AI API (AI Prediction)
+
+---
+
+# System Requirements
+
+Before running the project, ensure the following are installed.
+
+## 1. Install Node.js
+
+Download and install:
+
+* Node.js
+* npm (comes with Node.js)
+
+Recommended Version:
+
+* Node.js v18 or higher
+
+Official Website:
+
+[https://nodejs.org](https://nodejs.org)
+
+After installation, confirm:
+
+```bash
+node -v
+npm -v
+```
+
+---
+
+## 2. Install MongoDB
+
+Option 1 (Recommended):
+
+Use MongoDB Atlas Cloud Database.
+
+Website:
+
+[https://www.mongodb.com/atlas](https://www.mongodb.com/atlas)
+
+OR
+
+Option 2:
+
+Install MongoDB Community Server locally.
+
+Website:
+
+[https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+
+---
+
+# Project Structure
+
+```bash
+Prediction system/
+│
+├── client/        -> React Frontend
+├── server/        -> Node.js Backend
+└── README / Requirements
+```
+
+---
+
+# FRONTEND SETUP
+
+## Step 1: Open Frontend Folder
+
+```bash
+cd client
+```
+
+---
+
+## Step 2: Install Dependencies
+
+```bash
+npm install
+```
+
+This installs:
+
+* React Router DOM
+* Axios
+* Lucide React
+* Tailwind CSS
+* recharts
+
+---
+
+## Step 3: Run Frontend
+
+```bash
+npm run dev
+```
+
+The frontend will run on:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+# BACKEND SETUP
+
+## Step 1: Open Backend Folder
+
+```bash
+cd server
+```
+
+---
+
+## Step 2: Install Dependencies
+
+```bash
+npm install
+```
+
+This installs:
+
+* Express.js
+* Mongoose
+* dotenv
+* bcryptjs
+* jsonwebtoken
+* cors
+* nodemailer
+* Groq SDK
+
+
+---
+
+## Step 3: Create .env File
+
+Inside the server folder, create a file named:
+
+```bash
+.env
+```
+
+Add the following:
+
+```env
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret_key
+
+GROQ_API_KEY=your_groq_api_key
+
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_google_app_password
+```
+
+---
+
+# IMPORTANT CONFIGURATIONS
+
+## MongoDB
+
+Replace:
+
+```env
+MONGO_URI=
+```
+
+with your MongoDB connection string.
+
+Example:
+
+```env
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/diseaseprediction
+```
+
+---
+
+## Groq API Setup
+
+1. Create account:
+
+[https://console.groq.com](https://console.groq.com)
+
+2. Generate API key
+
+3. Copy the API key into:
+
+```env
+GROQ_API_KEY=
+```
+
+---
+
+## Gmail Setup for OTP Verification
+
+The system uses Nodemailer for email verification.
+
+### Important:
+
+Do NOT use your normal Gmail password.
+
+Use Google App Password instead.
+
+Steps:
+
+1. Enable 2-Step Verification on Gmail
+2. Generate App Password
+3. Copy App Password into:
+
+```env
+EMAIL_PASS=
+```
+
+---
+
+# Run Backend Server
+
+Inside server folder:
+
+```bash
+node server.js
+```
+
+
+
+
+
+# Commands Summary
+
+## Frontend
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+---
+
+## Backend
+
+```bash
+cd server
+npm install
+node server.js
+```
+
+---
+
+# Technologies Used
+
+| Technology   | Purpose            |
+| ------------ | ------------------ |
+| React.js     | Frontend UI        |
+| Tailwind CSS | Styling            |
+| Node.js      | Backend Runtime    |
+| Express.js   | Backend Framework  |
+| MongoDB      | Database           |
+| Mongoose     | MongoDB ODM        |
+| JWT          | Authentication     |
+| bcryptjs     | Password Hashing   |
+| Nodemailer   | Email Verification |
+| Groq AI      | AI Predictions     |
+| Axios        | API Requests       |
+| Lucide React | Icons              |
+
+---
+
+# Important Notes for Defense
+
+## Purpose of the Project
+
+The aim of the project is to assist school clinics in managing student health consultations efficiently while using AI support for possible disease prediction.
+
+---
+
+## Key Objectives
+
+* Digitize school clinic records
+* Improve consultation management
+* Support faster disease identification
+* Store student consultation history
+* Provide AI-assisted recommendations
+
+
+# Final Note
+
+To successfully run the project:
+
+1. Install Node.js
+2. Install MongoDB or use MongoDB Atlas
+3. Install dependencies using npm install
+4. Configure the .env file properly
+5. Start backend server
+6. Start frontend server
+7. Open the frontend in browser
+
+The system is now ready for use and project defense.
