@@ -1,27 +1,21 @@
-import bcrypt from "bcrypt";
-import User from "../models/User.js";
-import sendEmail from "../utils/sendEmail.js";
-import jwt from "jsonwebtoken";
+import bcrypt from 'bcrypt';
+import User from '../models/User.js';
+import sendEmail from '../utils/sendEmail.js';
+import jwt from 'jsonwebtoken';
 
 // ======================================
 // REGISTER USER
 // ======================================
 
 export const registerUser = async (req, res) => {
-
   try {
-
     // Get Data From Request Body
-    const {
-      name,
-      email,
-      password,
-    } = req.body || {};
+    const { name, email, password } = req.body || {};
 
     // Validate Inputs
     if (!name || !email || !password) {
       return res.status(400).json({
-        message: "All fields are required",
+        message: 'All fields are required',
       });
     }
 
@@ -30,7 +24,7 @@ export const registerUser = async (req, res) => {
 
     if (existingUser) {
       return res.status(400).json({
-        message: "User already exists",
+        message: 'User already exists',
       });
     }
 
@@ -51,65 +45,56 @@ export const registerUser = async (req, res) => {
       isVerified: false,
     });
 
-    // Save User To Database
     await newUser.save();
 
-    // Send Verification Email
-    await sendEmail(email, verificationCode);
+    try {
+      await sendEmail(email, verificationCode);
+    } catch (err) {
+      console.log(err);
+    }
 
-    // Success Response
     res.status(201).json({
-      message:
-        "User registered successfully. Verification code sent to email.",
+      message: 'User registered successfully',
     });
-
   } catch (error) {
-
-    console.log("REGISTER ERROR:", error);
+    console.log('REGISTER ERROR:', error);
 
     res.status(500).json({
-      message: "Server Error",
+      message: 'Server Error',
     });
-
   }
 };
 
-
 export const loginUser = async (req, res) => {
-
   try {
-
     const email = req.body.email?.trim();
     const password = req.body.password;
 
     if (!email || !password) {
       return res.status(400).json({
-        message: "All fields are required",
+        message: 'All fields are required',
       });
     }
 
     // Find User
     const user = await User.findOne({ email });
 
-    console.log("USER FOUND:", user);
+    console.log('USER FOUND:', user);
 
     if (!user) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message: 'Invalid email or password',
       });
     }
 
     // Compare Password
-    const isMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    console.log("PASSWORD MATCH:", isMatch);
+    console.log('PASSWORD MATCH:', isMatch);
 
     if (!isMatch) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message: 'Invalid email or password',
       });
     }
 
@@ -120,13 +105,12 @@ export const loginUser = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "7d",
+        expiresIn: '7d',
       }
     );
 
     res.status(200).json({
-
-      message: "Login successful",
+      message: 'Login successful',
 
       token,
 
@@ -135,16 +119,12 @@ export const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
       },
-
     });
-
   } catch (error) {
-
-    console.log("LOGIN ERROR:", error);
+    console.log('LOGIN ERROR:', error);
 
     res.status(500).json({
-      message: "Server Error",
+      message: 'Server Error',
     });
-
   }
 };
