@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://disease-system-production-80d4.up.railway.app",
 });
 
 export default API;

@@ -70,7 +70,7 @@ function Records() {
       const token = localStorage.getItem('token');
 
       const res = await axios.get(
-        'http://localhost:5000/api/students',
+        `https://disease-system-production-80d4.up.railway.app/api/students`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -98,7 +98,7 @@ function Records() {
       const token = localStorage.getItem('token');
 
       await axios.delete(
-        `http://localhost:5000/api/students/consultation/${consultationId}`,
+        `https://disease-system-production-80d4.up.railway.app/api/students/consultation/${consultationId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
