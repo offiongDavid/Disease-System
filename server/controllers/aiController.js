@@ -1,18 +1,13 @@
-import Groq from "groq-sdk";
+import Groq from 'groq-sdk';
 
 const groq = new Groq({
-  apiKey: process.env.GROK_KEY,
+  apiKey: process.env.GROQ_API_KEY, //api key
 });
 
-export const aiPrediction = async (
-  symptoms,
-  predictedDisease
-) => {
-
+export const aiPrediction = async (symptoms, predictedDisease) => {
   try {
-
     const symptomText = Array.isArray(symptoms)
-      ? symptoms.join(", ")
+      ? symptoms.join(', ')
       : String(symptoms);
 
     const prompt = `
@@ -48,64 +43,65 @@ Return ONLY valid JSON in this format:
 }
 `;
 
-    const chatCompletion =
-      await groq.chat.completions.create({
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
 
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
+      model: 'llama-3.3-70b-versatile',
 
-        model: "llama-3.3-70b-versatile",
+      temperature: 0.4,
+    });
 
-        temperature: 0.4,
+    const result = chatCompletion.choices[0]?.message?.content;
 
-      });
-
-    const result =
-      chatCompletion.choices[0]
-        ?.message?.content;
-
-    console.log("AI RESULT:", result);
+    console.log('AI RESULT:', result);
 
     const cleanedResult = result
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
+      .replace(/```json/g, '')
+      .replace(/```/g, '')
       .trim();
 
-    return JSON.parse(cleanedResult);
+    // Find the first and last curly braces
+    const jsonStart = cleanedResult.indexOf('{');
+    const jsonEnd = cleanedResult.lastIndexOf('}');
 
+    if (jsonStart === -1 || jsonEnd === -1) {
+      throw new Error('No JSON object found in AI response.');
+    }
+
+    const jsonString = cleanedResult.substring(jsonStart, jsonEnd + 1);
+
+    console.log('Extracted JSON:');
+    console.log(jsonString);
+
+    return JSON.parse(jsonString);
   } catch (error) {
-
-    console.log("AI ERROR:", error);
+    console.log('AI ERROR:', error);
 
     return {
-
       predictedDisease:
-        predictedDisease !== "Unknown"
+        predictedDisease !== 'Unknown'
           ? predictedDisease
-          : "Further Medical Diagnosis Required",
+          : 'Further Medical Diagnosis Required',
 
       confidence:
         symptoms.length >= 5
-          ? "High"
+          ? 'High'
           : symptoms.length >= 3
-          ? "Moderate"
-          : "Low",
+            ? 'Moderate'
+            : 'Low',
 
-      medication:
-        "Consult a healthcare professional for proper medication.",
+      medication: 'Consult a healthcare professional for proper medication.',
 
       recommendation:
-        "Further medical evaluation is advised based on the provided symptoms.",
+        'Further medical evaluation is advised based on the provided symptoms.',
 
       precautions:
-        "Monitor symptoms closely and seek medical attention if symptoms worsen.",
-
+        'Monitor symptoms closely and seek medical attention if symptoms worsen.',
     };
-
   }
-
 };

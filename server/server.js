@@ -1,8 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-
-
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -17,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+console.log(process.env.GROQ_API_KEY);
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/predictions", predictionRoutes);
