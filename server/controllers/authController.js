@@ -31,27 +31,25 @@ export const registerUser = async (req, res) => {
     // Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate 6-Digit Verification Code
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    // // Generate 6-Digit Verification Code
+    // const verificationCode = Math.floor(
+    //   100000 + Math.random() * 900000
+    // ).toString();
 
     // Create New User
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      verificationCode,
-      isVerified: false,
     });
 
     await newUser.save();
 
-    try {
-      await sendEmail(email, verificationCode);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   await sendEmail(email, verificationCode);
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
     res.status(201).json({
       message: 'User registered successfully',
