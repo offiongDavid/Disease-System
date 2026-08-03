@@ -53,7 +53,7 @@ function Dashboard() {
     try {
       const token = localStorage.getItem('token');
 
-      const res = await axios.get(`https://disease-system-production-80d4.up.railway.app/api/students`, {
+      const res = await axios.get(`http://localhost:5000/students`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
