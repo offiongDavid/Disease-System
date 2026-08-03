@@ -58,7 +58,7 @@ function Students() {
       const token = localStorage.getItem('token');
 
       const res = await axios.get(
-        `http://localhost:5000/students`,
+        `${import.meta.env.VITE_API_URL}/students`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ function Students() {
       const token = localStorage.getItem('token');
 
       await axios.delete(
-        `http://localhost:5000/students/consultation/${consultationId}`,
+        `${import.meta.env.VITE_API_URL}/students/consultation/${consultationId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ function Students() {
       const token = localStorage.getItem('token');
 
       await axios.delete(
-        `http://localhost:5000/students/${studentId}`,
+        `${import.meta.env.VITE_API_URL}/students/${studentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
