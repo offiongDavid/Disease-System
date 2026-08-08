@@ -93,9 +93,9 @@ function Signup() {
         confirmPassword: "",
       });
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+  setTimeout(() => {
+  navigate("/verify-email", { state: { email: formData.email } });
+}, 1500);
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     } finally {

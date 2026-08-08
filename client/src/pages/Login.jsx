@@ -52,8 +52,16 @@ function Login() {
         navigate("/dashboard");
       }, 1500);
     } catch (error) {
-      setMessage(error.response?.data?.message || "Something went wrong");
-    } finally {
+      const data = error.response?.data;
+
+      if (data?.needsVerification) {
+        navigate("/verify-email", { state: { email: data.email } });
+        return;
+      }
+
+      setMessage(data?.message || "Something went wrong");
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -243,12 +251,12 @@ function Login() {
                   Remember me
                 </label>
 
-                <button
-                  type="button"
+                <Link
+                  to="/forgot-password"
                   className="text-blue-700 font-semibold hover:underline"
                 >
                   Forgot password?
-                </button>
+                </Link>
               </div>
 
               {/* BUTTON */}
